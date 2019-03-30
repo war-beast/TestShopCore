@@ -1,0 +1,23 @@
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{    
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a asp-controller="Profile" asp-action="Index" title="Manage">Привет @UserManager.GetUserName(User)!</a>
+            </li>
+            <li>
+                <a asp-controller="Account" asp-action="Logout">Выход</a>
+            </li>
+        </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-area="Identity" asp-page="/Account/Register">Зарегистрироваться</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Login">Вход</a></li>
+    </ul>
+}

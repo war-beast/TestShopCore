@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,6 +42,17 @@ namespace TestShopCore
                 });
 
                 await context.SaveChangesAsync();
+            }
+        }
+
+        public static async Task InitAdmin(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            if (!userManager.Users.Any())
+            {
+                var admin = new IdentityUser { Email = "test@shop.ru", EmailConfirmed = true, PhoneNumber = "+79051111111", UserName = "test@shop.ru", PhoneNumberConfirmed = true };
+                await userManager.CreateAsync(admin);
+                await roleManager.CreateAsync(new IdentityRole { Name = "admin" });
+                await userManager.AddToRoleAsync(admin, "admin");                
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -21,6 +22,9 @@ namespace TestShopCore
                 {
                     var context = services.GetRequiredService<DataContext>();
                     await InitData.Initialize(context);
+                    var identContext = services.GetRequiredService<UserManager<IdentityUser>>();
+                    var roleContext = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    await InitData.InitAdmin(identContext, roleContext);
                 }
                 catch (Exception ex)
                 {
