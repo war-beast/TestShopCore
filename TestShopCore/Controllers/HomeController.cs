@@ -15,7 +15,7 @@ namespace TestShopCore.Controllers
             unitOfWork = context;
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             ViewBag.Title = "Тестовый интернет-магазин";
 
@@ -24,43 +24,13 @@ namespace TestShopCore.Controllers
             return View(categories);
         }
 
-        [HttpPost]
-        public ActionResult SortedProducts(FilterViewModels filter)
+        public IActionResult SortedProducts()
         {
-            IEnumerable<Product> productList = new List<Product>();
-            var allProducts = unitOfWork.Products.GetAll();
-
-            foreach (var category in filter.Categories)
-            {
-                var query = allProducts.Where(prod => prod.Price >= filter.MinPrice && prod.Price <= filter.MaxPrice && prod.CategoryId == category.Id);
-                productList = productList.Concat(query);
-                var list = new List<Product>();
-                list.AddRange(productList);
-            }
-
-
-            switch (filter.Sort)
-            {
-                case 1:
-                    productList = productList.OrderBy(pr => pr.Price);
-                    break;
-                case 2:
-                    productList = productList.OrderBy(pr => pr.Rating);
-                    break;
-            }
-            return PartialView("_ProductList", productList);
+            var productList = unitOfWork.Products.GetAll();
+            return View("_ProductList", productList);
         }
 
-        public ActionResult CategoryProducts(int id = 0)
-        {
-            if (id == 0)
-                return RedirectToAction("Index");
-
-            var category = unitOfWork.Categories.Get(id);
-            return PartialView("_CategoryProducts", category);
-        }
-
-        public ActionResult Product(int id = 0)
+        public IActionResult Product(int id = 0)
         {
             if (id == 0)
                 return RedirectToAction("Index");
@@ -70,7 +40,7 @@ namespace TestShopCore.Controllers
             return View(product);
         }
 
-        public ActionResult Category(int id = 0)
+        public IActionResult Category(int id = 0)
         {
             if (id == 0)
                 return RedirectToAction("Index");

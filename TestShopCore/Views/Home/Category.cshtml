@@ -54,7 +54,7 @@
                 <!-- /store top filter -->
                 <!-- store products -->
                 <div class="row" id="productList">
-                    @await Component.InvokeAsync("CategoryProducts");
+                    @await Component.InvokeAsync("CategoryProducts", new { id = Model.Id });
                 </div>
                 <!-- /store products -->
             </div>

@@ -151,7 +151,7 @@ $(document).ready(function() {
             handle ? priceInputMax.value = value : priceInputMin.value = value;
         });
     }
-    /*--����� ������� �������--*/
+    /*--Конец функций шаблона--*/
     Storage.prototype.setObject = function (key, value) {
         this.setItem(key, JSON.stringify(value));
     };
@@ -296,7 +296,7 @@ function ReloadList(filter) {
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
         cache: false,
-        url: '/Home/SortedProducts',
+        url: '/api/Common/SortedProducts',
         data: JSON.stringify(filter),
         complete: function (data) {
             if (data.status === 200) {
@@ -304,7 +304,7 @@ function ReloadList(filter) {
                 ResetBuyButtons();
             }
             else {
-                $("#productList").html("�� ������� ���������. ");
+                $("#productList").html("Не удалось загрузить. ");
             }
         }
     });
