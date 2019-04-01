@@ -46,7 +46,7 @@
                         <label>
                             Сотрировать по:
                             <select class="input-select" id="sortType">
-                                @{ Html.RenderAction("SortingList", "Home"); }
+                                @await Component.InvokeAsync("SortingList");
                             </select>
                         </label>
                     </div>
@@ -54,7 +54,7 @@
                 <!-- /store top filter -->
                 <!-- store products -->
                 <div class="row" id="productList">
-                    @{ Html.RenderAction("CategoryProducts", "Home", Model.Id); }
+                    @await Component.InvokeAsync("CategoryProducts");
                 </div>
                 <!-- /store products -->
             </div>

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +16,21 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\fonts\slick.svg" />
     <None Include="wwwroot\js\bundle.min.js" />
+    <None Include="wwwroot\Photo\20032511m.jpg" />
+    <None Include="wwwroot\Photo\20059428m.jpg" />
+    <None Include="wwwroot\Photo\30028509m.jpg" />
+    <None Include="wwwroot\Photo\30040019m.jpg" />
+    <None Include="wwwroot\Photo\30042521m.jpg" />
+    <None Include="wwwroot\Photo\30042525m.jpg" />
+    <None Include="wwwroot\Photo\50045503m.jpg" />
+    <None Include="wwwroot\Photo\product01.png" />
+    <None Include="wwwroot\Photo\product03.png" />
   </ItemGroup>
 
   <ItemGroup>

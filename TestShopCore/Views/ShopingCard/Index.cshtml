@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
     ViewBag.Title = "Корзина.";
 }
 
@@ -54,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                @if (!Request.IsAuthenticated)
+                @if (!SignInManager.IsSignedIn(User))
                 {
                     <p>Чтобы сделать заказ, <a href="/Login">войдите в свой аккаунт</a>. Если у вас нет аккаунта, <a href="/Login/Registration">зарегистрируйтесь</a>.</p>
                 }

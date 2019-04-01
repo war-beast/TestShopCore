@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TestShop.Repositories;
 using TestShopCore.Models;
 
 namespace TestShopCore.Repositories
