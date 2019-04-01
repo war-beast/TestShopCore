@@ -1,0 +1,65 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Вход";
+}
+
+<div class="page login-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <p>Вход в личный кабинет.</p>
+                <form id="login-form" method="post">
+                    <div class="form-group">
+                        <label for="username" class="label-custom">Email</label><br />
+                        <input id="username" type="text" name="loginUsername" required="" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="label-custom">Пароль</label><br />
+                        <input id="password" type="password" name="loginPassword" required="" class="form-control">
+                    </div>
+                    <button id="login" href="#" class="primary-btn order-submit">Войти</button>
+                    <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+                </form>
+                <div class="row">
+                    <span id="errMessage"></span>
+                </div>
+                <div class="pull-right">
+                    <a href="/Login/Registration">Зарегистрироваться</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            //...........................
+            var tokenKey = "tokenInfo";
+            $('#login').click(function (e) {
+                var initialInner = $("#login").html();
+                $("#login").html("<img src='/Img/loader.gif' />");
+                e.preventDefault();
+                var loginData = {
+                    grant_type: 'password',
+                    username: $('#username').val(),
+                    password: $('#password').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Token',
+                    data: loginData
+                }).done(function (data) {
+                    localStorage.setItem(tokenKey, data.access_token);
+                    $("#login").html(initialInner);
+                    location.reload();
+                }).fail(function (data) {
+                    $("#errMessage").html(data.responseJSON.error_description);
+                    $("#login").html(initialInner);
+                });
+            });
+        });
+    </script>
+}

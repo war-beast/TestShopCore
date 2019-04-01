@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "wwwroot/js/bundle.js",
+    "inputFiles": [
+      "wwwroot/js/nouislider.min.js",
+      "wwwroot/js/slick.min.js",
+      "wwwroot/js/main.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/bundle.css",
+    "inputFiles": [
+      "wwwroot/css/font-awesome.min.css",
+      "wwwroot/css/nouislider.min.css",
+      "wwwroot/css/slick.css",
+      "wwwroot/css/slick-theme.css",
+      "wwwroot/css/style.css"
+    ]
+  }
+]

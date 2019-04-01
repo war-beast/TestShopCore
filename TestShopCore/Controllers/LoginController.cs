@@ -1,55 +1,33 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using TestShop.Models;
 
-namespace TestShop.Controllers
+namespace TestShopCore.Controllers
 {
-    public class LoginController : AsyncController
+    public class LoginController : Controller
     {
-        private ApplicationUserManager _userManager;
-        public ApplicationUserManager UserManager
+        private readonly SignInManager<IdentityUser> SignInManager;
+
+        public LoginController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            get
-            {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            SignInManager = signInManager;
         }
 
         // GET: Admin/Login
-        public async Task<ActionResult> Index()
+        public IActionResult Index()
         {
-            if (Request.IsAuthenticated)
-                return RedirectToAction("Index", "Profile");
-
-            var admin = await UserManager.FindByNameAsync("test@shop.ru");
-            if (admin == null)
-                await InitializeAdminAsync();
-
-            return View();
-        }
-
-        public ActionResult Registration()
-        {
-            if (Request.IsAuthenticated)
+            if (SignInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Profile");
 
             return View();
         }
 
-        private async Task InitializeAdminAsync()
+        public IActionResult Registration()
         {
-            ApplicationUser admin = new ApplicationUser { Email = "test@shop.ru", PhoneNumber = "+79051111111", UserName = "test@shop.ru" };
-            IdentityResult result = await UserManager.CreateAsync(admin, "123456"); //result тут нужен торлько для отладки, так как регистрация админа - это разовая акция и не видна на клиенте.
+            if (SignInManager.IsSignedIn(User))
+                return RedirectToAction("Index", "Profile");
+
+            return View();
         }
     }
 }

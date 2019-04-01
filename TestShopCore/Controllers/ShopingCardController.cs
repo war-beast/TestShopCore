@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using TestShop.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TestShop.Controllers
+namespace HomeController.Controllers
 {
     public class ShopingCardController : Controller
     {
         // GET: ShopingCard
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }

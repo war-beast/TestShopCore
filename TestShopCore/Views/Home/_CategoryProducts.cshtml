@@ -1,0 +1,42 @@
+﻿@model Category
+
+@foreach (var product in Model.Products)
+{
+    <!-- product -->
+    <div class="col-sm-4 col-xs-6">
+        <div class="product">
+            <div class="product-img">
+                <img src="@product.Photo" alt="">
+            </div>
+            <div class="product-body">
+                <p class="product-category">@product.Category.Name</p>
+                <h3 class="product-name"><a href="~/Home/Product/@product.Id">@product.Name</a></h3>
+                <h4 class="product-price">
+                    @product.Price ₽ <del class="product-old-price">
+                        @{
+                            var dif = product.Price * 1.1M;
+                            @dif;
+                        } ₽
+                    </del>
+                </h4>
+                <div class="product-rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>&nbsp;
+                    <i>(@Html.Raw(product.Rating))</i>
+                </div>
+                <div class="product-btns">
+                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">добавить в список желаний</span></button>
+                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">добавить в сравнения</span></button>
+                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">предпросмотр</span></button>
+                </div>
+            </div>
+            <div class="add-to-cart">
+                <button class="add-to-cart-btn" data-prodict-id="@product.Id" data-product-name="@product.Name" data-product-price="@product.Price"><i class="fa fa-shopping-cart"></i> добавить в корзину</button>
+            </div>
+        </div>
+    </div>
+    <!-- /product -->
+}

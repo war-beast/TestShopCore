@@ -1,35 +1,24 @@
-﻿using Microsoft.AspNet.Identity.Owin;
-using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using TestShop.Models;
-using TestShop.Repositories;
+using TestShopCore.Models;
+using TestShopCore.Repositories;
 
-namespace TestShop.Controllers
+namespace TestShopCore.Controllers
 {
     [Authorize]
-    public class ProfileController : AsyncController
+    public class ProfileController : Controller
     {
         UnitOfWork unitOfWork;
-        private ApplicationUserManager _userManager;
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
+        private readonly UserManager<IdentityUser> UserManager;
 
-        public ProfileController()
+        public ProfileController(UnitOfWork context, UserManager<IdentityUser> um)
         {
-            unitOfWork = new UnitOfWork();
+            unitOfWork = context;
+            UserManager = um;
         }
 
         // GET: Profile

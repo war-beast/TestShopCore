@@ -1,0 +1,333 @@
+﻿@model Product
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Product main img -->
+            <div class="col-md-5 col-md-push-2">
+                <img src="@Model.Photo" alt="">
+            </div>
+            <!-- /Product main img -->
+            <!-- Product details -->
+            <div class="col-md-5">
+                <div class="product-details">
+                    <h2 class="product-name">@Model.Name</h2>
+                    <div>
+                        <div class="product-rating">
+                            @for (int idx = 1; idx <= 5; idx++)
+                            {
+                                if (idx <= @Model.Rating)
+                                {
+                                    <i class="fa fa-star"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-star-o"></i>
+                                }
+                            }
+                        </div>
+                        Реитинг товра:&nbsp;@Model.Rating
+                    </div>
+                    <div>
+                        <h3 class="product-price">
+                            @Model.Price ₽ <del class="product-old-price">
+                                @{
+                                    var dif = Model.Price * 1.1M;
+                                    @dif;
+                                } ₽
+                            </del>
+                        </h3>
+                        <span class="product-available">Есть на складе</span>
+                    </div>
+                    <p>@Model.Description</p>
+
+                    <div class="add-to-cart">
+                        <div class="qty-label">
+                            Кол-во:
+                            <div class="input-number">
+                                <input type="number" id="productCount" value="1">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
+                        </div>
+                        <button class="add-to-cart-btn" data-prodict-id="@Model.Id" data-product-name="@Model.Name" data-product-price="@Model.Price"><i class="fa fa-shopping-cart"></i> положить в корзину</button>
+                    </div>
+
+                    <ul class="product-links">
+                        <li>Категория: </li>
+                        <li>@Model.Category.Name</li>
+                    </ul>
+
+                    <ul class="product-links">
+                        <li>Поделиться в:</li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <!-- /Product details -->
+            <!-- Product tab -->
+            <div class="col-md-12">
+                <div id="product-tab">
+                    <!-- product tab nav -->
+                    <ul class="tab-nav">
+                        <li class="active"><a data-toggle="tab" href="#tab1">Описание</a></li>
+                        <li><a data-toggle="tab" href="#tab2">Отзывы</a></li>
+                    </ul>
+                    <!-- /product tab nav -->
+                    <!-- product tab content -->
+                    <div class="tab-content">
+                        <!-- tab1  -->
+                        <div id="tab1" class="tab-pane fade in active">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>@Model.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /tab1  -->
+                        <!-- tab2  -->
+                        <div id="tab2" class="tab-pane fade in">
+                            <div class="row">
+                                <!-- Rating -->
+                                <div class="col-md-3">
+                                    <div id="rating">
+                                        <div class="rating-avg">
+                                            <span>@Model.Rating</span>
+                                            <div class="rating-stars">
+                                                @for (int idx = 1; idx <= 5; idx++)
+                                                {
+                                                    if (idx <= @Model.Rating)
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        <ul class="rating">
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div></div>
+                                                </div>
+                                                <span class="sum">0</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div style="width: 80%;"></div>
+                                                </div>
+                                                <span class="sum">4</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div style="width: 40%;"></div>
+                                                </div>
+                                                <span class="sum">2</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div></div>
+                                                </div>
+                                                <span class="sum">0</span>
+                                            </li>
+                                            <li>
+                                                <div class="rating-stars">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div></div>
+                                                </div>
+                                                <span class="sum">0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Rating -->
+                                <!-- Reviews -->
+                                <div class="col-md-6">
+                                    <div id="reviews">
+                                        <ul class="reviews">
+                                            <li>
+                                                <div class="review-heading">
+                                                    <h5 class="name">Вася</h5>
+                                                    <p class="date">27 декабря 2018, 8:00</p>
+                                                    <div class="review-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="review-body">
+                                                    <p>Дедуктивный метод прост. Интеллект естественно дискредитирует конфликт. Искусство, по определению, контролирует напряженный закон внешнего мира. Гений, следовательно, творит конфликт. Суждение индуцирует онтологический знак. Единственной космической субстанцией Гумбольдт считал материю, наделенную внутренней активностью, несмотря на это дилемма естественно творит дуализм.</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="review-heading">
+                                                    <h5 class="name">Петя</h5>
+                                                    <p class="date">28 ноября 2018, 16:00</p>
+                                                    <div class="review-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="review-body">
+                                                    <p>Предмет деятельности, как принято считать, непредвзято подчеркивает непредвиденный дедуктивный метод. Современная критика, конечно, философски творит примитивный здравый смысл. Ощущение мира, как следует из вышесказанного, представляет собой мир. Реальная власть индуцирует естественный закон исключённого третьего, не учитывая мнения авторитетов. Дистинкция методологически подчеркивает напряженный предмет деятельности.</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="review-heading">
+                                                    <h5 class="name">Коля</h5>
+                                                    <p class="date">17 июля 2018, 12:40</p>
+                                                    <div class="review-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o empty"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="review-body">
+                                                    <p>Апперцепция дискредитирует напряженный дуализм. Отвечая на вопрос о взаимоотношении идеального ли и материального ци, Дай Чжень заявлял, что знак индуцирует типичный закон исключённого третьего. Вселенная философски рефлектирует принцип восприятия. Дедуктивный метод оспособляет знак.</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Reviews -->
+                                <!-- Review Form -->
+                                <div class="col-md-3">
+                                    <div id="review-form">
+                                        <form class="review-form">
+                                            <input class="input" type="text" placeholder="Ваше имя" id="userName">
+                                            <input class="input" type="email" placeholder="Ваш Email" id="userMail">
+                                            <textarea class="input" placeholder="Текст отзыва" id="userReview"></textarea>
+                                            <div class="input-rating">
+                                                <span>Ваша оценка: </span>
+                                                <div class="stars">
+                                                    <input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+                                                    <input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+                                                    <input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+                                                    <input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+                                                    <input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+                                                </div>
+                                            </div>
+                                            <div class="alert-danger" id="errorMessage"></div>
+                                            <button class="primary-btn" id="sendReview" type="button" data-product-id="@Model.Id">Отправить</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /Review Form -->
+                            </div>
+                        </div>
+                        <!-- /tab2  -->
+                    </div>
+                    <!-- /product tab content  -->
+                </div>
+            </div>
+            <!-- /product tab -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+@section  scripts{
+    <script>
+        $(document).ready(function () {
+            ResetBuyButtons();
+
+            $("#sendReview").click(function () {
+                $("#errorMessage").html("");
+                var productId = $(this).data("product-id");
+                var value = $(":radio[name='rating']:checked").val();
+                var review = {
+                    UserName: $("#userName").val(),
+                    UserEmail: $("#userMail").val(),
+                    ReviewText: $("#userReview").val(),
+                    ProductId: productId,
+                    Value: value
+                };
+
+                if (review.UserName.trim() === "" || review.UserEmail.trim() === "" || review.ReviewText.trim() === "") {
+                    $("#errorMessage").html("Заполните все текстовые поля.");
+                    return;
+                }
+
+                var initialInner = $("#sendReview").html();
+                $("#sendReview").html("<img src='/Img/loader.gif' />");
+
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: "application/json;charset=utf-8",
+                    cache: false,
+                    type: 'POST',
+                    url: '/api/Common/SendReview',
+                    data: JSON.stringify(review),
+                    complete: function (data) {
+                        if (data.statusText.toLocaleLowerCase() === "ok") {
+                            $("#userReview").val("");
+                            $("#sendReview").replaceWith("<span>Отзыв отправлен.</span>");
+                        }
+                        else {
+                            $("#errorMessage").html(data.responseJSON.Message);
+                            $("#sendReview").html(initialInner);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

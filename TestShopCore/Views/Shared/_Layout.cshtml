@@ -1,57 +1,295 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MVCCore</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
+    <title>@ViewBag.Title</title>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+        <link rel="stylesheet" href="~/css/bundle.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/bundle.min.css" asp-append-version="true" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">MVCCore</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Главная</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Orders">Заказы</a></li>
+    <!-- HEADER -->
+    <header>
+        <!-- TOP HEADER -->
+        <div id="top-header">
+            <div class="container-fluid">
+                <ul class="header-links pull-left">
+                    <li><a href="#"><i class="fa fa-phone"></i> +7 (843) 111-11-11</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> email@testshop.ru</a></li>
+                    <li><a href="#"><i class="fa fa-map-marker"></i> Казань, Петербургская 50 корпус 5 офис 405</a></li>
                 </ul>
-                <partial name="_LoginPartial" />
+                @Html.PartialAsync("_LoginPartial")
             </div>
         </div>
+        <!-- /TOP HEADER -->
+        <!-- MAIN HEADER -->
+        <div id="header">
+            <!-- container -->
+            <div class="container-fluid">
+                <!-- row -->
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="~/" class="logo">
+                                <img src="~/img/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /LOGO -->
+                    <!-- SEARCH BAR -->
+                    <div class="col-md-6">
+                        <div class="header-search">
+                            <form>
+                                <select class="input-select">
+                                    <option value="0">Все категории</option>
+                                    @await Component.InvokeAsync("CatList")
+                                </select>
+                                <input class="input" placeholder="Фраза для поиска">
+                                <button class="search-btn">Найти</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /SEARCH BAR -->
+                    <!-- ACCOUNT -->
+                    <div class="col-md-3 clearfix">
+                        <div class="header-ctn">
+                            <!-- Wishlist -->
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <div>
+                                    <a href="#">
+                                        <i class="fa fa-heart-o"></i>
+                                        <span>Список желаний</span>
+                                        <div class="qty">0</div>
+                                    </a>
+                                </div>
+                            }
+                            <!-- /Wishlist -->
+                            <!-- Cart -->
+                            <div class="dropdown">
+                                <a href="/ShopingCard">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>Корзина<br />&nbsp;</span>
+                                    <div class="qty" id="shopingItemsCount">0</div>
+                                </a>
+                            </div>
+                            <!-- /Cart -->
+                            <!-- Menu Toogle -->
+                            <div class="menu-toggle">
+                                <a href="#">
+                                    <i class="fa fa-bars"></i>
+                                    <span>меню</span>
+                                </a>
+                            </div>
+                            <!-- /Menu Toogle -->
+                        </div>
+                    </div>
+                    <!-- /ACCOUNT -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
+    <!-- /HEADER -->
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+        <!-- container -->
+        <div class="container">
+            <!-- responsive-nav -->
+            <div id="responsive-nav">
+                <!-- NAV -->
+                <ul class="main-nav nav navbar-nav">
+                    <li class="active"><a href="~/">Главная</a></li>
+                    <li class="drop">
+                        <a>Категории товаров</a>
+                        <div class="menudrop">
+                            <ul class="container-fluid">
+                                @await Component.InvokeAsync("CatNavigation", "Home")
+                            </ul>
+                        </div>
+                    </li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li><a href="/ShopingCard">Корзина</a></li>
+                        <li><a href="~/Profile">Личный кабинет</a></li>
+                    }
+                    @if (User.Identity.Name == "test@shop.ru")
+                    {
+                        <li>
+                            <a href="~/Admin/Order">Администратор</a>
+                        </li>
+                    }
+                </ul>
+                <input id="pageName" type="hidden" value="@ViewContext.RouteData.Values["controller"].ToString()" />
+                <!-- /NAV -->
+            </div>
+            <!-- /responsive-nav -->
+        </div>
+        <!-- /container -->
     </nav>
-
-    <partial name="_CookieConsentPartial" />
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2019 - MVCCore</p>
-        </footer>
+    <!-- /NAVIGATION -->
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- content -->
+            @RenderBody()
+            <!--end content-->
+        </div>
+        <!-- /container -->
     </div>
+    <!-- /SECTION -->
+    <!-- NEWSLETTER -->
+    <div id="newsletter" class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="newsletter">
+                        <p>Зарегистрируйтесь, чтобы получать <strong>ПИСЬМА</strong></p>
+                        <form>
+                            <input class="input" type="email" placeholder="Введите Email">
+                            <button class="newsletter-btn"><i class="fa fa-envelope"></i> Подписаться</button>
+                        </form>
+                        <ul class="newsletter-follow">
+                            <li>
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /NEWSLETTER -->
+    <!-- FOOTER -->
+    <footer id="footer">
+        <!-- top footer -->
+        <div class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-4 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">О нас</h3>
+                            <p>Тут может быть рекламный слоган магазина.</p>
+                            <ul class="footer-links">
+                                <li><a href="#"><i class="fa fa-map-marker"></i>Казань, Петербургская 50 корпус 5 офис 405</a></li>
+                                <li><a href="#"><i class="fa fa-phone"></i>+7 (843) 111-11-11</a></li>
+                                <li><a href="#"><i class="fa fa-envelope-o"></i>email@testshop.ru</a></li>
+                            </ul>
+                        </div>
+                    </div>
 
+                    <!--<div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Категории</h3>
+                            <ul class="footer-links">
+                                <li><a href="#">Горячие предложения</a></li>
+                                @*@{Html.RenderAction("CatNavigation", "Home");}*@
+                            </ul>
+                        </div>
+                    </div>-->
+
+                    <div class="clearfix visible-xs"></div>
+
+                    <div class="col-md-4 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Информация</h3>
+                            <ul class="footer-links">
+                                <li><a href="#">О нас</a></li>
+                                <li><a href="#">Контакты</a></li>
+                                <li><a href="#">Соглашение о приватности</a></li>
+                                <li><a href="#">Заказы и возвраты</a></li>
+                                <li><a href="#">Термины</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="footer">
+                            <h3 class="footer-title">Профиль</h3>
+                            <ul class="footer-links">
+                                <li><a href="/ShopingCard">Корзина</a></li>
+                                <li><a href="/Profile">Личный кабинет</a></li>
+                                <li><a href="#">Помощь</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /top footer -->
+        <!-- bottom footer -->
+        <div id="bottom-footer" class="section">
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <ul class="footer-payments">
+                            <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
+                            <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+                        </ul>
+                        <span class="copyright">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> Все права защищены | Этот шаблон честно сворован с сайта <a href="https://colorlib.com" target="_blank" rel="nofollow">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </span>
+
+
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /bottom footer -->
+    </footer>
+    <!-- /FOOTER -->
+    <!-- jQuery Plugins -->
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/bundle.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
@@ -66,9 +304,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/bundle.min.js" asp-append-version="true"></script>
     </environment>
-    @Html.PartialAsync("_ValidationScriptsPartial")
-    @RenderSection("Scripts", required: false)
 </body>
 </html>

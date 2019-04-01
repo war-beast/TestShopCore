@@ -1,21 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using TestShop.Models;
-using TestShop.Repositories;
+using TestShopCore.Models;
+using TestShopCore.Repositories;
 
-namespace TestShop.Controllers
+namespace TestShopCore.Controllers
 {
-    public class HomeController : AsyncController
+    public class HomeController : Controller
     {
         UnitOfWork unitOfWork;
 
-        public HomeController()
+        public HomeController(UnitOfWork context)
         {
-            unitOfWork = new UnitOfWork();
+            unitOfWork = context;
         }
 
         public ActionResult Index()
@@ -25,30 +22,6 @@ namespace TestShop.Controllers
             var categories = unitOfWork.Categories.GetAll();
 
             return View(categories);
-        }
-
-        public ActionResult SortingList()
-        {
-            var sort = new SortType().GetSortTypes();
-            return PartialView("_SortingList", sort);
-        }
-
-        public ActionResult CatList()
-        {
-            var categories = unitOfWork.Categories.GetAll();
-            return PartialView("_CatList", categories);
-        }
-
-        public ActionResult CatNavigation()
-        {
-            var categories = unitOfWork.Categories.GetAll();
-            return PartialView("_CatNavigation", categories);
-        }
-
-        public ActionResult SortedProducts()
-        {
-            var productList = unitOfWork.Products.GetAll();
-            return PartialView("_ProductList", productList);
         }
 
         [HttpPost]
@@ -78,43 +51,31 @@ namespace TestShop.Controllers
             return PartialView("_ProductList", productList);
         }
 
-        public ActionResult CategoryProducts(int? id)
+        public ActionResult CategoryProducts(int id = 0)
         {
-            int identity = 0;
-            if (id.HasValue)
-                identity = id.Value;
-
-            if (identity == 0)
+            if (id == 0)
                 return RedirectToAction("Index");
 
-            var category = unitOfWork.Categories.Get(identity);
+            var category = unitOfWork.Categories.Get(id);
             return PartialView("_CategoryProducts", category);
         }
 
-        public ActionResult Product(int? id)
+        public ActionResult Product(int id = 0)
         {
-            int identity = 0;
-            if (id.HasValue)
-                identity = id.Value;
-
-            if (identity == 0)
+            if (id == 0)
                 return RedirectToAction("Index");
 
-            var product = unitOfWork.Products.Get(identity);
+            var product = unitOfWork.Products.Get(id);
 
             return View(product);
         }
 
-        public ActionResult Category(int? id)
+        public ActionResult Category(int id = 0)
         {
-            int identity = 0;
-            if (id.HasValue)
-                identity = id.Value;
-
-            if (identity == 0)
+            if (id == 0)
                 return RedirectToAction("Index");
 
-            var category = unitOfWork.Categories.Get(identity);
+            var category = unitOfWork.Categories.Get(id);
 
             return View(category);
         }
