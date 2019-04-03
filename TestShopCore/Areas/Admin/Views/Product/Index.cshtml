@@ -1,0 +1,56 @@
+﻿@model AdminProductListViewModel
+
+@{
+    ViewBag.Title = "Товары в категории: ";
+}
+<section class="dashboard-counts section-padding charts">
+    <div class="container-fluid">
+        <p>
+            <a asp-area="Admin" asp-controller="Product" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-primary dialog">Добавить</a>
+        </p>
+        <p>
+            <h2>Категория: @Model.CategoryName</h2>
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    Наименование
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Рейтинг
+                </th>
+                <th>
+                    Фото
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model?.Products)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Photo)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Изменить", "Edit", new { id = item.Id }, new { @class = "dialog", @title = "Изменить" }) |
+                        @Html.ActionLink("Сведения", "Details", new { id = item.Id }, new { @class = "dialog", @title = "Сведения" }) |
+                        @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "dialog", @title = "Удалить" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</section>

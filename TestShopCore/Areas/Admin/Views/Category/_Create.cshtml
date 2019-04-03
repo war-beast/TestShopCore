@@ -1,0 +1,63 @@
+﻿<div class="form-horizontal">
+    <div class="form-group">
+        <label for="name" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" id="name" />
+            <span class="text-danger" id="err-message"></span>
+        </div>
+    </div>
+
+    <div class="form-group pull-right">
+        <button type="button" class="btn btn-primary" id="submit">ОК</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function () { CreateCategory(); });
+
+        function CreateCategory() {
+            var tokenKey = "tokenInfo";
+            $("#err-message").html("");
+            if ($("#name").val().trim() === "") {
+                $("#err-message").html("Надо заполнить все поля!");
+            }
+
+            let category = {
+                Name: $("#name").val()
+            }
+
+            let sendButtonInitial = $("#submit").html();
+            $("#submit").css("disable", "disable");
+            $("#submit").html("<img src='/images/loader.gif' />");
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                cache: false,
+                url: '/api/Admin/CreateCategory',
+                data: JSON.stringify(category),
+                beforeSend: function (xhr) {
+                    var token = localStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                complete: function (data) {
+                    if (data.status !== 200) {
+                        $("#err-message").html(data.responseJSON.Message);
+                    }
+                    else if (data.statusText.toLocaleLowerCase() === "ok") {
+                        location.reload();
+                    }
+                    else {
+                        $("#err-message").html(data.responseJSON.error_description);
+                    }
+
+                    $("#submit").removeAttr("disable");
+                    $("#submit").html(sendButtonInitial);
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,51 @@
+﻿@model Product
+
+<div class="container-fluid">
+    <h4>@Model.Name</h4>
+    <div class="row">
+        <div class="col-sm-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo)
+                </dt>
+
+                <dd>
+                    <img src="@Model.Photo" />
+                </dd>
+            </dl>
+        </div>
+        <div class="col-sm-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Rating)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Rating)
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.Raw(@Model.Description)
+            </dd>
+        </dl>
+    </div>
+    <div class="pull-right">
+        <button role="button" type="button" data-dismiss="modal" class="btn btn-default">ОК</button>
+    </div>
+</div>

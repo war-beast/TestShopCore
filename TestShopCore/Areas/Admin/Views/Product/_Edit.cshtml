@@ -1,0 +1,109 @@
+﻿@model Product
+
+<div class="form-horizontal">
+    @Html.HiddenFor(model => model.CategoryId)
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10 input-group">
+            <div class="input-group-addon">
+                <div class="input-group-text">₽</div>
+            </div>
+            <input class="form-control" type="number" min="0" step="0.01" id="Price" name="Price" data-value="@Model.Price"  />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10 input-group">
+            <div class="input-group-addon">
+                <div class="input-group-text">🟊</div>
+            </div>
+            @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0", value = "0" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @class = "form-control", placeholder = "/Photo/photo.jpg" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+    </div>
+
+    <span class="text-danger" id="err-message"></span>
+
+    <div class="form-group pull-right">
+        <button type="button" class="btn btn-primary" id="submit">Сохранить</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function () { EditProduct(); });
+
+        var price = $("#Price").data("value");
+        $("#Price").val(price.replace(",", "."));
+
+        function EditProduct() {
+            var tokenKey = "tokenInfo";
+            $("#err-message").html("");
+            if ($("#Name").val().trim() === "" || $("#Price").val().trim() === "" || $("#Photo").val().trim() === "" || $("#Description").val().trim() === "") {
+                $("#err-message").html("Надо заполнить все поля!");
+            }
+
+            let product = {
+                Id: $("#Id").val(),
+                Name: $("#Name").val(),
+                CategoryId: $("#CategoryId").val(),
+                Price: $("#Price").val(),
+                Rating: $("#Rating").val(),
+                Photo: $("#Photo").val(),
+                Description: $("#Description").val()
+            }
+
+            let sendButtonInitial = $("#submit").html();
+            $("#submit").css("disable", "disable");
+            $("#submit").html("<img src='/images/loader.gif' />");
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                cache: false,
+                url: '/api/Admin/EditProduct',
+                data: JSON.stringify(product),
+                beforeSend: function (xhr) {
+                    var token = localStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                complete: function (data) {
+                    if (data.status !== 200) {
+                        $("#err-message").html(data.responseJSON.Message);
+                    }
+                    else if (data.statusText.toLocaleLowerCase() === "ok") {
+                        location.reload();
+                    }
+                    else {
+                        $("#err-message").html(data.responseJSON.error_description);
+                    }
+
+                    $("#submit").removeAttr("disable");
+                    $("#submit").html(sendButtonInitial);
+                }
+            });
+        }
+    });
+</script>

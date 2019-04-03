@@ -1,0 +1,61 @@
+﻿@model IEnumerable<OrderViewModel>
+
+@{
+    ViewBag.Title = "Заказаы";
+}
+
+<section class="dashboard-counts section-padding charts">
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>
+                    E-mail заказчика
+                </th>
+                <th>
+                    Сумма заказа
+                </th>
+                <th>
+                    Доставка
+                </th>
+                <th>
+                    Дата
+                </th>
+                <th>
+                    Товаров
+                </th>
+                <th>
+                    Статус
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.Sum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.Date)
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Order" asp-action="Products" asp-route-id="@item.Order.Id" title="Детали заявки" class="dialog">@item.Order.OrderItems.Count <i class="fa fa-eye" aria-hidden="true"></i></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.State)
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Order" asp-action="EditStatus" asp-route-id="@item.Order.Id" title="Изменить статус" class="dialog"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+            }
+
+        </table>
+    </div>
+</section>

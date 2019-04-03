@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="nofollow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="/css/admin/bootstrap.min.css" />
+    <!-- Google fonts - Roboto -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="/css/admin/style.sea.css" id="theme-stylesheet">
+    <!-- jQuery Circle-->
+    <link rel="stylesheet" href="/css/admin/grasp_mobile_progress_circle-1.0.0.min.css" />
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="/css/admin/custom.css" />
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+</head>
+<body>
+    <!-- Side Navbar -->
+    <nav class="side-navbar">
+        <div class="side-navbar-wrapper">
+            <div class="sidenav-header d-flex align-items-center justify-content-center">
+                <div class="sidenav-header-inner text-center">
+                    <img src="/images/avatar-1.jpg" alt="person" class="img-fluid rounded-circle">
+                    <h2 class="h5 text-uppercase">Администратор</h2><span class="text-uppercase">Web Developer</span>
+                </div>
+                <div class="sidenav-header-logo"><a href="~/Areas/Admin/Restrict/" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
+            </div>
+            <div class="main-menu">
+                <ul id="side-main-menu" class="side-menu list-unstyled">
+                    <li><a href="/Admin/Order/"> <i class="fa fa-home"></i><span>Заявки</span></a></li>
+                    <li> <a href="/Admin/Category/"><i class="fa fa-list-alt"></i><span>Категории</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="page home-page">
+        <!-- navbar-->
+        <header class="header">
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <div class="navbar-holder d-flex align-items-center justify-content-between">
+                        <div class="navbar-header">
+                            <a id="toggle-btn" href="~/Areas/Admin/Restrict/" class="menu-btn"><i class="fa fa-bars"> </i></a><a href="index.html" class="navbar-brand">
+                                <div class="brand-text hidden-sm-down"><span>Администратор сайта </span><strong class="text-primary"> TestShop</strong></div>
+                            </a>
+                        </div>
+                        <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                            <li class="nav-item"><a href="#" class="nav-link logout">Выйти<i class="fa fa-sign-out"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!--Контент страницы-->
+        <section class="forms">
+            @RenderBody()
+        </section>
+        <footer class="main-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Your company &copy; 2018-@Html.Raw(DateTime.Today.Year)</p>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <p>Design by <a href="https://bootstrapious.com" class="external">Bootstrapious</a></p>
+                        <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!--Модальное окно редактирования контента-->
+    <div id="contentDialog" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content forms">
+                <div class="modal-header">
+                    <h5 class="modal-title">Поля для контента</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Модальное окно уведомлений-->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ошибка</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="alertMessage">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Javascript files-->
+    <script src="/js/admin/jquery-1.10.2.min.js"></script>
+    <script src="/js/admin/tether.min.js"></script>
+    <script src="/js/admin/bootstrap.min.js"></script>
+    <script src="/js/admin/jquery.cookie.js"></script>
+    <script src="/js/admin/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+    <script src="/js/admin/jquery.nicescroll.min.js"></script>
+    <script src="/js/admin/jquery.validate.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="js/charts-home.js"></script>-->
+    <script src="/js/admin/front.js"></script>
+    <script src="/js/admin/handlebars-v4.0.11.js"></script>
+    <script src="/js/admin/custom.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

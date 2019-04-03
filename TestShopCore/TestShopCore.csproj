@@ -15,6 +15,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Category\_Create.cshtml" />
+    <None Include="Areas\Admin\Views\Category\_Delete.cshtml" />
+    <None Include="Areas\Admin\Views\Category\_Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Order\_EditStatus.cshtml" />
+    <None Include="Areas\Admin\Views\Order\_Products.cshtml" />
+    <None Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Product\_Create.cshtml" />
+    <None Include="Areas\Admin\Views\Product\_Delete.cshtml" />
+    <None Include="Areas\Admin\Views\Product\_Details.cshtml" />
+    <None Include="Areas\Admin\Views\Product\_Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_Alert.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="bundleconfig.json" />
     <None Include="wwwroot\fonts\fontawesome-webfont.svg" />
     <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
@@ -40,6 +55,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Home\_ProductList.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

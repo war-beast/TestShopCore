@@ -1,0 +1,69 @@
+﻿@model Order
+
+<h3>Выберите статус для этого заказа.</h3>
+<div class="form-horizontal">
+    @Html.HiddenFor(model => model.Id)
+    <input type="hidden" value="@Model.State" id="currentState" />
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Статус заказа: </label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.State, new SelectList(@ViewBag.StatusList), new { @class = "form-control" })
+            <span class="text-danger" id="err-message"></span>
+        </div>
+    </div>
+
+    <div class="form-group pull-right">
+        <button type="button" class="btn btn-primary" id="submit">Сохранить</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#State").val($("#currentState").val());
+
+        $("#submit").click(function () { EditStatus(); });
+
+        function EditStatus() {
+            var tokenKey = "tokenInfo";
+            $("#err-message").html("");
+
+            let category = {
+                Name: $("#State").val(),
+                Id: $("#Id").val()
+            }
+
+            let sendButtonInitial = $("#submit").html();
+            $("#submit").css("disable", "disable");
+            $("#submit").html("<img src='/images/loader.gif' />");
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                cache: false,
+                url: '/api/Admin/EditOrderStatus',
+                data: JSON.stringify(category),
+                beforeSend: function (xhr) {
+                    var token = localStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                complete: function (data) {
+                    if (data.status !== 200) {
+                        $("#err-message").html(data.responseText);
+                    }
+                    else if (data.statusText.toLocaleLowerCase() === "ok") {
+                        location.reload();
+                    }
+                    else {
+                        $("#err-message").html(data.responseText);
+                    }
+
+                    $("#submit").removeAttr("disable");
+                    $("#submit").html(sendButtonInitial);
+                }
+            });
+        }
+    });
+</script>

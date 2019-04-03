@@ -24,7 +24,7 @@
                     </div>
                     <div class="order-products">
                         <div id="productsInCard" class="container-fluid">
-                            <p>Список загружается <img src="~/Img/loader.gif" /></p>
+                            <p>Список загружается <img src="/images/loader.gif" /></p>
                         </div>
                     </div>
                     <div class="order-col">
@@ -165,6 +165,12 @@
                     Items: productArray,
                     Adress: $("#adress").val()
                 };
+
+                if (productArray.length === 0) {
+                    $(".order-summary").html("Ни один товар не выбран.");
+                    return;
+                }
+
                 var tokenKey = "tokenInfo";
                 var initialInner = $(".order-submit").html();
                 $(".order-submit").html("<img src='/images/loader.gif' />");

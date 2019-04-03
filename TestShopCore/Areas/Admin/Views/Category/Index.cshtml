@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewBag.Title = "Категории товаров";
+}
+
+<section class="dashboard-counts section-padding charts">
+    <div class="container-fluid">
+        <p>
+            <a asp-area="Admin" asp-controller="Category" asp-action="Create" title="Новая категория" class="btn btn-primary">Добавить</a>
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>Количество товаров</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @item.Products.Count (<a asp-area="Admin" asp-controller="Product" asp-action="Index" asp-route-id="@item.Id">открыть список</a>)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Изменить", "Edit", new { id = item.Id }, new { @class = "dialog", @title = "Изменить" }) |
+                        @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "dialog", @title = "Удалить" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</section>

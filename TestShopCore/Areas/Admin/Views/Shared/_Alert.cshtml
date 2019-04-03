@@ -1,0 +1,25 @@
+﻿@model String
+
+<section class="forms">
+    <div class="container-fluid">
+        <h3>Внимание!</h3>
+        <div class="row">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    @Html.DisplayFor(model => model)
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="dismissAlert" role="button" type="button">ОК</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $("#dismissAlert").click(function () {
+            $("#contentDialog").modal("hide");
+        });
+    });
+</script>
