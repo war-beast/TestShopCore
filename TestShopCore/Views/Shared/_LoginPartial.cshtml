@@ -6,12 +6,12 @@
 <ul class="header-links pull-right">
     @if (!SignInManager.IsSignedIn(User))
     {
-        <li><a href="~/Account/Register"><i class="fa fa-user-o"></i> Зарегистрироваться</a></li>
-        <li><a href="~/Login"><i class="fa fa-user-o"></i> Войти</a></li>
+        <li><a href="~/Account/Register"><i class="fa fa-user-plus"></i> Зарегистрироваться</a></li>
+        <li><a href="~/Account/Login"><i class="fa fa-sign-in"></i> Войти</a></li>
     }
     else
     {
         <li><a><i class="fa fa-user-o"></i> @Html.Raw(User.Identity.Name)</a></li>
-        <li><a href="#" class="logout">Выход <i class="fa fa-sign-out"></i></a></li>
+        <li><a href="" class="logout">Выход <i class="fa fa-sign-out"></i></a></li>
     }
 </ul>

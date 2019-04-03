@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestShopCore.Models
 {
     public class Order
     {
         public int Id { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         [Display(Name = "Сумма заказа")]
         public decimal Sum { get; set; }
         public int CustomerId { get; set; }

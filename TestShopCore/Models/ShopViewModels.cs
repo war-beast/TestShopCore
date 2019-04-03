@@ -70,4 +70,10 @@ namespace TestShopCore.Models
         [Required]
         public int ProductId { get; set; }
     }
+
+    public class ProductListViewModel
+    {
+        public IEnumerable<Category> Categories { get; set; }
+        public List<Product> Products { get; set; }
+    }
 }

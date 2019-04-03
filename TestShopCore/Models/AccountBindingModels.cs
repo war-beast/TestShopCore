@@ -31,13 +31,24 @@ namespace TestShopCore.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class LoginBindingModel
+    {
+        [Required(ErrorMessage = "Поле {0} должно быть заполнено")]
+        [Display(Name = "Логин")]
+        public string Login { get; set; }
+
+        [Required(ErrorMessage = "Поле {0} должно быть заполнено")]
+        [Display(Name = "Пароль")]
+        public string Password { get; set; }
+    }
+
     public class RegisterBindingModel
     {
-        [Required]
+        [Required(ErrorMessage ="Поле {0} должно быть заполнено")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Поле {0} должно быть заполнено")]
         [StringLength(100, ErrorMessage = "Длина поля {0} должна быть не менее {2} символов.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
@@ -51,7 +62,7 @@ namespace TestShopCore.Models
 
     public class RegisterExternalBindingModel
     {
-        [Required]
+        [Required(ErrorMessage = "Поле {0} должно быть заполнено")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
@@ -69,7 +80,7 @@ namespace TestShopCore.Models
 
     public class SetPasswordBindingModel
     {
-        [Required]
+        [Required(ErrorMessage = "Поле {0} должно быть заполнено")]
         [StringLength(100, ErrorMessage = "Длина поля {0} должна быть не менее {2} символов.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Новый пароль")]

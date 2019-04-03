@@ -167,7 +167,7 @@ $(document).ready(function() {
     function Logout() {
         var tokenKey = "tokenInfo";
         var initialInner = $("#login").html();
-        $(".logout").html("<img src='/Img/loader.gif' />");
+        $(".logout").html("<img src='/images/loader.gif' />");
 
         $.ajax({
             type: 'GET',
@@ -291,7 +291,7 @@ function ReloadList(filter) {
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
         cache: false,
-        url: '/api/Common/SortedProducts',
+        url: '/api/Home/SortedProducts',
         data: JSON.stringify(filter),
         complete: function (data) {
             if (data.status === 200) {

@@ -47,12 +47,21 @@ namespace TestShopCore
 
         public static async Task InitAdmin(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            if (!userManager.Users.Any())
+            IdentityUser adminUser = null;
+            try {
+                adminUser = await userManager.FindByEmailAsync("test@shop.ru");
+            }
+            catch(Exception ex)
+            {
+                string msg = ex.Message;
+            }
+            if (adminUser == null)
             {
                 var admin = new IdentityUser { Email = "test@shop.ru", EmailConfirmed = true, PhoneNumber = "+79051111111", UserName = "test@shop.ru", PhoneNumberConfirmed = true };
-                await userManager.CreateAsync(admin);
+                await userManager.CreateAsync(admin, "123456");
                 await roleManager.CreateAsync(new IdentityRole { Name = "admin" });
-                await userManager.AddToRoleAsync(admin, "admin");                
+                await userManager.AddToRoleAsync(admin, "admin");
+                await roleManager.CreateAsync(new IdentityRole { Name = "user" });
             }
         }
     }

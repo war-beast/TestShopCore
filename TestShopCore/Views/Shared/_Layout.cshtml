@@ -309,5 +309,6 @@
         <script src="~/js/bundle.min.js" asp-append-version="true"></script>
     </environment>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestShopCore.Models
 {
@@ -14,6 +15,7 @@ namespace TestShopCore.Models
         [Display(Name = "Наименование")]
         public string Name { get; set; }
 
+        [Column(TypeName = "decimal(18, 2)")]
         [Display(Name = "Цена")]
         [Required]
         public decimal Price { get; set; }
