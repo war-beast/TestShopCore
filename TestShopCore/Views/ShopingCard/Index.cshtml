@@ -23,13 +23,24 @@
                         <div class="col-sm-2"><strong>ЦЕНА</strong></div>
                     </div>
                     <div class="order-products">
-                        <div id="productsInCard" class="container-fluid">
-                            <p>Список загружается <img src="/images/loader.gif" /></p>
+                        <div class="container-fluid" ng-repeat="item in card.items">
+                            <div class='row mb-1'>
+                                <div class='col-sm-5' ng-bind="item.Name"></div>
+                                <div class='input-number col-sm-3'>
+                                    <input type='number' ng-model="item.Count" />
+                                    <span class='qty-up' data-id='item.Id'>+</span>
+                                    <span class='qty-down' data-id='item.Id'>-</span>
+                                </div>
+                                <div class='col-sm-2'>
+                                    <span ng-bind="item.Price"></span>&nbsp;₽
+                                </div>
+                                <div class='col-sm-2'><a href='' class='remove' ng-click="removeItem(item)">X</a></div>
+                            </div>
                         </div>
                     </div>
                     <div class="order-col">
                         <div><strong>ИТОГО</strong></div>
-                        <div><strong class="order-total"></strong></div>
+                        <div><strong class="order-total">{{totalSum() | currency}}</strong></div>
                     </div>
                 </div>
                 <h3 class="title">Доставка</h3>
@@ -63,7 +74,7 @@
                 }
                 else
                 {
-                    <a href="#" class="primary-btn order-submit">Заказать</a>
+                    <a href="" class="primary-btn order-submit" ng-click="sendOrder()">Заказать</a>
                 }
             </div>
             <!-- /Order Details -->
@@ -77,130 +88,26 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            var productArray = localStorage.getObject("shoping-card") === null ? new Array() : localStorage.getObject("shoping-card");
-            LoadCardUI();
-
-            function LoadCardUI() {
-                var totalSum = 0;
-                if (productArray.length > 0)
-                    $("#productsInCard").html("");
-                else
-                    $("#productsInCard").html("В корзине нет товаров.");
-
-                $.each(productArray, function () {
-                    var prod = $(this)[0];
-                    var it = GetItemBlock(prod);
-                    $("#productsInCard").append(it);
-                    totalSum += parseFloat(prod.Price.replace(",", ".")) * prod.Count;
-                });
-                totalSum = totalSum.toFixed(2);
-
-                $(".remove").click(function (e) {
-                    e.preventDefault();
-                    SetDelete($(this).data("id"));
-                    LoadCardUI();
-                });
-
-                $(".order-total").html(totalSum + "&nbsp;₽");
-                InitaializeUpDown();
-                InitaializeCountChangin();
-            }
-
             function GetItemBlock(item) {
-                return "<div class='row mb-1'><div class='col-sm-5'>" + item.Name + "</div><div class='input-number col-sm-3'><input id='count-" + item.Id + "' type='number' class='order-items' value='" + item.Count + "' /><span class='qty-up' data-id='" + item.Id + "'>+</span><span class='qty-down' data-id='" + item.Id + "'>-</span></div><div class='col-sm-2'><span id='sum-" + item.Id + "'>" + item.Price + "</span>&nbsp;₽</div><div class='col-sm-2'><a href='#' data-id='" + item.Id + "' class='remove'>X</a></div></div>";
-            }
-
-            function SetDelete(id) {
-                var totalSum = 0;
-                var oldArray = productArray;
-                productArray = new Array();
-                for (var idx = 0; idx < oldArray.length; idx++) {
-                    var item = oldArray[idx];
-                    if (item.Id !== id) {
-                        productArray.push(item);
-                        totalSum += item.Price * item.Count;
-                    }
-                }
-                totalSum = totalSum.toFixed(2);
-
-                $(".order-total").html(totalSum);
-                localStorage.setObject("shoping-card", productArray);
-                $("#shopingItemsCount").html(productArray.length);
-            }
-
-            function InitaializeCountChangin() {
-                var up = $('.qty-up'),
-                    down = $('.qty-down');
-
-                down.on('click', function () {
-                    var id = $(this).data("id");
-                    UpdateShopingCard(id);
-                });
-
-                up.on('click', function () {
-                    var id = $(this).data("id");
-                    UpdateShopingCard(id);
-                });
-            }
-
-            function UpdateShopingCard(id) {
-                var value = parseInt($("#count-" + id).val());
-                var totalSum = 0;
-                for (var idx = 0; idx < productArray.length; idx++) {
-                    var item = productArray[idx];
-                    if (item.Id === id) {
-                        item.Count = value;
-                    }
-                    totalSum += parseFloat(item.Price.replace(",", ".")) * item.Count;
-                }
-                totalSum = totalSum.toFixed(2);
-
-                $(".order-total").html(totalSum + "&nbsp;₽");
-                localStorage.setObject("shoping-card", productArray);
-            }
-
-            $(".order-submit").click(function (e) {
-                e.preventDefault();
-                var order = {
-                    Items: productArray,
-                    Adress: $("#adress").val()
+                var cardElement = {
+                    template: [
+                        "<div class='row mb-1'>",
+                        "<div class='col-sm-5'>" + item.Name + "</div>",
+                        "<div class='input-number col-sm-3'>",
+                        "<input id='count-" + item.Id + "' type='number' class='order-items' value='" + item.Count + "' />",
+                        "<span class='qty-up' data-id='" + item.Id + "'>+</span>",
+                        "<span class='qty-down' data-id='" + item.Id + "'>-</span>",
+                        "</div>",
+                        "<div class='col-sm-2'>",
+                        "<span id='sum-" + item.Id + "'>" + item.Price + "</span>&nbsp;₽",
+                        "</div>",
+                        "<div class='col-sm-2'><a href='#' data-id='" + item.Id + "' class='remove'>X</a></div>",
+                        "</div>"
+                    ].join('')
                 };
 
-                if (productArray.length === 0) {
-                    $(".order-summary").html("Ни один товар не выбран.");
-                    return;
-                }
-
-                var tokenKey = "tokenInfo";
-                var initialInner = $(".order-submit").html();
-                $(".order-submit").html("<img src='/images/loader.gif' />");
-
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: "application/json;charset=utf-8",
-                    cache: false,
-                    url: '/api/Common/SendShopingCard',
-                    data: JSON.stringify(order),
-                    beforeSend: function (xhr) {
-                        var token = localStorage.getItem(tokenKey);
-                        xhr.setRequestHeader("Authorization", "Bearer " + token);
-                    },
-                    complete: function (data) {
-                        if (data.statusText === "OK") {
-                            $(".order-submit").html(initialInner);
-                            productArray = new Array();
-                            localStorage.setObject("shoping-card", productArray);
-                            $(".order-summary").html("Заявка отправлена.");
-                            $(".order-total").html("0");
-                        }
-                        else {
-                            alert(data.responseText);
-                        }
-                    }
-                });
-            });
+                return cardElement.template;
+            }
         });
     </script>
 }

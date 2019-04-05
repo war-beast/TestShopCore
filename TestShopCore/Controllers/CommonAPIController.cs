@@ -10,7 +10,6 @@ using TestShopCore.Repositories;
 
 namespace TestShopCore.Controllers
 {
-    [Route("api/[controller]")]
     public class CommonController : Controller
     {
         private readonly UserManager<IdentityUser> UserManager;
@@ -24,7 +23,7 @@ namespace TestShopCore.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("SendShopingCard")]
+        [Route("api/[controller]/SendShopingCard")]
         public async Task<IActionResult> SendShopingCard([FromBody] ShopingCardViewModel model)
         {
             string retVal = "";
@@ -68,7 +67,7 @@ namespace TestShopCore.Controllers
         }
 
         [HttpPost]
-        [Route("SendReview")]
+        [Route("api/[controller]/SendReview")]
         public IActionResult SendReview([FromBody] ReviewViewModel model)
         {
             string retVal = "ok";

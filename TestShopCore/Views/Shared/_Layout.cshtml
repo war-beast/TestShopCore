@@ -2,7 +2,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +23,7 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
     </environment>
 </head>
-<body>
+<body ng-controller="ShopingCardCtrl">
     <!-- HEADER -->
     <header>
         <!-- TOP HEADER -->
@@ -87,7 +87,7 @@
                                 <a href="/ShopingCard">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Корзина<br />&nbsp;</span>
-                                    <div class="qty" id="shopingItemsCount">0</div>
+                                    <div class="qty" id="shopingItemsCount" ng-bind="itemCount()"></div>
                                 </a>
                             </div>
                             <!-- /Cart -->
@@ -289,6 +289,8 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/angular.min.js" asp-append-version="true"></script>
+        <script src="~/js/i18n/angular-locale_ru-ru.js" asp-append-version="true"></script>
         <script src="~/js/slick.min.js" asp-append-version="true"></script>
         <script src="~/js/nouislider.min.js" asp-append-version="true"></script>
         <script src="~/js/main.js" asp-append-version="true"></script>

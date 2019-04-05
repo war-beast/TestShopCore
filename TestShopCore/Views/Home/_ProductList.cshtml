@@ -12,7 +12,7 @@
                 <p class="product-category">@product.Category.Name</p>
                 <h3 class="product-name"><a href="~/Home/Product/@product.Id">@product.Name</a></h3>
                 <h4 class="product-price">
-                    @product.Price ₽ <del class="product-old-price">
+                    <span>@product.Price</span> ₽ <del class="product-old-price">
                         @{
                             var dif = product.Price * 1.1M;
                             @dif;
@@ -33,8 +33,11 @@
                     <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">предпросмотр</span></button>
                 </div>
             </div>
-            <div class="add-to-cart">
-                <button class="add-to-cart-btn" data-prodict-id="@product.Id" data-product-name="@product.Name" data-product-price="@product.Price"><i class="fa fa-shopping-cart"></i> добавить в корзину</button>
+            <div class="add-to-cart"> 
+                @{ var price = product.Price;
+                    var name = product.Name;
+                    var id = product.Id;}
+                <button class="add-to-cart-btn" ng-click="addItem({Id: @id, Name: '@name', Price: '@price', Count: 1})"><i class="fa fa-shopping-cart"></i> добавить в корзину</button>
             </div>
         </div>
     </div>

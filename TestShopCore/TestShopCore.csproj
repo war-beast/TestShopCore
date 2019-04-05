@@ -37,6 +37,7 @@
     <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="wwwroot\fonts\slick.svg" />
     <None Include="wwwroot\js\bundle.min.js" />
+    <None Include="wwwroot\js\i18n\angular-locale_ru-ru.js" />
     <None Include="wwwroot\Photo\20032511m.jpg" />
     <None Include="wwwroot\Photo\20059428m.jpg" />
     <None Include="wwwroot\Photo\30028509m.jpg" />

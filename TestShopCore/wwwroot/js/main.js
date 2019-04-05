@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     "use strict";
 
     // Mobile Nav toggle
@@ -146,18 +146,6 @@ $(document).ready(function() {
             handle ? priceInputMax.value = value : priceInputMin.value = value;
         });
     }
-    /*--Конец функций шаблона--*/
-    Storage.prototype.setObject = function (key, value) {
-        this.setItem(key, JSON.stringify(value));
-    };
-
-    Storage.prototype.getObject = function (key) {
-        var value = this.getItem(key);
-        return value && JSON.parse(value);
-    };
-
-    var productArray = localStorage.getObject("shoping-card") === null ? new Array() : localStorage.getObject("shoping-card");
-    $("#shopingItemsCount").html(productArray.length);
 
     $(".logout").click(function (e) {
         e.preventDefault();
@@ -236,22 +224,6 @@ function updatePriceSlider(elem, value) {
     }
 }
 
-function ResetBuyButtons() {
-    $(".add-to-cart-btn").click(function () {
-        var productCount = $("#productCount").val() === undefined ? 1 : $("#productCount").val();
-        var selectedProduct = {
-            Id: $(this).data("prodict-id"),
-            Name: $(this).data("product-name"),
-            Count: productCount,
-            Price: $(this).data("product-price")
-        };
-        var productArray = localStorage.getObject("shoping-card") === null ? new Array() : localStorage.getObject("shoping-card");
-        productArray.push(selectedProduct);
-        localStorage.setObject("shoping-card", productArray);
-        $("#shopingItemsCount").html(productArray.length);
-    });
-}
-
 $(document).ready(function () {
     $("#filter").click(function () {
         CreateFilter();
@@ -260,8 +232,6 @@ $(document).ready(function () {
     $("#sortType").on("change", function () {
         CreateFilter();
     });
-
-    ResetBuyButtons();
 });
 
 function CreateFilter() {
@@ -304,3 +274,80 @@ function ReloadList(filter) {
         }
     });
 }
+
+/*----------AngularJS-----------------*/
+/*--Конец функций шаблона--*/
+(function () {
+    'use strict';
+    Storage.prototype.setObject = function (key, value) {
+        this.setItem(key, angular.toJson(value));
+    };
+
+    Storage.prototype.getObject = function (key) {
+        var value = this.getItem(key);
+        return value && JSON.parse(value);
+    };
+
+    angular.module('app', []).controller('ShopingCardCtrl', ['$scope', '$http', ShopingCardCtrl]);
+
+    function ShopingCardCtrl($scope, $http) {
+        $scope.card = localStorage.getObject("shoping-card") === null ? { items: new Array() } : localStorage.getObject("shoping-card");
+        $scope.totalSum = function () {
+            var totalSum = 0;
+            angular.forEach($scope.card.items, function (prod) {
+                totalSum += prod.Price * prod.Count;
+            });
+
+            return totalSum.toFixed(2);
+        };
+        $scope.itemCount = function () {
+            return $scope.card.items ? $scope.card.items.length : 0;
+        };
+
+        $scope.addItem = function (item) {
+            item.Price = parseFloat(item.Price.replace(",", "."));
+            $scope.card.items.push(item);
+            localStorage.setObject("shoping-card", this.card);
+        };
+
+        $scope.removeItem = function (itemToRemove) {
+            var index = this.card.items.indexOf(itemToRemove);
+            this.card.items.splice(index, 1);
+            localStorage.setObject("shoping-card", this.card);
+        };
+
+        $scope.sendOrder = function () {
+            var tokenKey = "tokenInfo";
+            var token = localStorage.getItem(tokenKey);
+            var initialInner = $(".order-submit").html();
+            $(".order-submit").html("<img src='/images/loader.gif' />");
+            var model = {
+                Items: this.card.items,
+                Adress: $("#adress").val()
+            };
+            $http({
+                responseType: "json",
+                method: "POST",
+                cache: false,
+                url: '/api/Common/SendShopingCard',
+                data: angular.toJson(model),
+                headers: { 'Authorization': "Bearer " + token, 'Content-Type': 'application/json;charset=utf-8' }
+            }).then(function (response) {
+                $scope.card = { items: new Array() };
+                localStorage.setObject("shoping-card", $scope.card);
+                $(".order-submit").html(initialInner);
+            }, function (error) {
+                $(".order-submit").html(initialInner);
+                alert(error.statusText);
+            });
+        };
+
+        function LocalizePrice() {
+            var array = this.card.items;
+            angular.forEach(array, function (prod) {
+                prod.Price = prod.Price.replace(".", ",");
+            });
+            return array;
+        }
+    }
+})();

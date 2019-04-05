@@ -2,6 +2,8 @@
   {
     "outputFileName": "wwwroot/js/bundle.js",
     "inputFiles": [
+      "wwwroot/js/angular.min.js",
+      "wwwroot/js/i18n/angular-locale_ru-ru.js",
       "wwwroot/js/nouislider.min.js",
       "wwwroot/js/slick.min.js",
       "wwwroot/js/main.js"
