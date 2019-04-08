@@ -52,12 +52,16 @@
                         <div class="qty-label">
                             Кол-во:
                             <div class="input-number">
-                                <input type="number" id="productCount" value="1">
-                                <span class="qty-up">+</span>
-                                <span class="qty-down">-</span>
+                                <input type="number" id="productCount" ng-init="count=1" value="{{count}}" min="1" max="10000">
+                                <span class="qty-up" ng-click="count = count + 1">+</span>
+                                <span class="qty-down" ng-click="count = count - 1">-</span>
                             </div>
                         </div>
-                        <button class="add-to-cart-btn" data-prodict-id="@Model.Id" data-product-name="@Model.Name" data-product-price="@Model.Price"><i class="fa fa-shopping-cart"></i> положить в корзину</button>
+                        @{ var price = Model.Price;
+                            var name = Model.Name;
+                            var id = Model.Id;
+                            var photo = Model.Photo;}
+                        <button class="add-to-cart-btn" ng-click="addItem({Id: @id, Name: '@name', Price: '@price', Count: count, Photo: '@photo'})"><i class="fa fa-shopping-cart"></i> добавить в корзину</button>
                     </div>
 
                     <ul class="product-links">
@@ -282,11 +286,9 @@
 </div>
 <!-- /SECTION -->
 
-@section  scripts{
+@section scripts{
     <script>
         $(document).ready(function () {
-            ResetBuyButtons();
-
             $("#sendReview").click(function () {
                 $("#errorMessage").html("");
                 var productId = $(this).data("product-id");

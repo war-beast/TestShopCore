@@ -84,11 +84,35 @@
                             <!-- /Wishlist -->
                             <!-- Cart -->
                             <div class="dropdown">
-                                <a href="/ShopingCard">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Корзина<br />&nbsp;</span>
                                     <div class="qty" id="shopingItemsCount" ng-bind="itemCount()"></div>
                                 </a>
+                                <div class="cart-dropdown">
+                                    <div class="cart-list">
+                                        <div ng-repeat="item in card.items">
+                                            <div class="product-widget">
+                                                <div class="product-img">
+                                                    <img ng-src="{{item.Photo}}" alt="">
+                                                </div>
+                                                <div class="product-body">
+                                                    <h3 class="product-name"><a href="">{{item.Name}}</a></h3>
+                                                    <h4 class="product-price"><span class="qty">{{item.Count}}x</span>{{item.Price | currency}}</h4>
+                                                </div>
+                                                <button class="delete" ng-click="removeItem(item)"><i class="fa fa-close"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cart-summary">
+                                        <small>Выбрано {{itemCount()}} наименований</small>
+                                        <h5>Сумма: {{totalSum() | currency}}</h5>
+                                    </div>
+                                    <div class="cart-btns">
+                                        <a href="/ShopingCard">Посмотреть</a>
+                                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Скрыть  <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /Cart -->
                             <!-- Menu Toogle -->
@@ -227,90 +251,91 @@
 
                     <div class="col-md-4 col-xs-6">
                         <div class="footer">
-                            <h3 class="footer-title">Информация</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">О нас</a></li>
-                                <li><a href="#">Контакты</a></li>
-                                <li><a href="#">Соглашение о приватности</a></li>
-                                <li><a href="#">Заказы и возвраты</a></li>
-                                <li><a href="#">Термины</a></li>
-                            </ul>
+                                                 <h3 class="footer-title">Инфо
+                                <h3 class="footer-title">рмация</h3>
+                                <ul class="footer-links">
+                                    <li><a href="#">О нас</a></li>
+                                    <li><a href="#">Контакты</a></li>
+                                    <li><a href="#">Соглашение о приватности</a></li>
+                                    <li><a href="#">Заказы и возвраты</a></li>
+                                    <li><a href="#">Термины</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12">
+                            <div class="footer">
+                                <h3 class="footer-title">Профиль</h3>
+                                <ul class="footer-links">
+                                    <li><a href="/ShopingCard">Корзина</a></li>
+                                    <li><a href="/Profile">Личный кабинет</a></li>
+                                    <li><a href="#">Помощь</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-4 col-xs-12">
-                        <div class="footer">
-                            <h3 class="footer-title">Профиль</h3>
-                            <ul class="footer-links">
-                                <li><a href="/ShopingCard">Корзина</a></li>
-                                <li><a href="/Profile">Личный кабинет</a></li>
-                                <li><a href="#">Помощь</a></li>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /top footer -->
+            <!-- bottom footer -->
+            <div id="bottom-footer" class="section">
+                <div class="container">
+                    <!-- row -->
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <ul class="footer-payments">
+                                <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
+                                <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
                             </ul>
+                            <span class="copyright">
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> Все права защищены | Этот шаблон честно сворован с сайта <a href="https://colorlib.com" target="_blank" rel="nofollow">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </span>
+
+
                         </div>
                     </div>
+                    <!-- /row -->
                 </div>
-                <!-- /row -->
+                <!-- /container -->
             </div>
-            <!-- /container -->
-        </div>
-        <!-- /top footer -->
-        <!-- bottom footer -->
-        <div id="bottom-footer" class="section">
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <ul class="footer-payments">
-                            <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-                            <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
-                        </ul>
-                        <span class="copyright">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;
-                            <script>document.write(new Date().getFullYear());</script> Все права защищены | Этот шаблон честно сворован с сайта <a href="https://colorlib.com" target="_blank" rel="nofollow">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </span>
-
-
-                    </div>
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /bottom footer -->
-    </footer>
-    <!-- /FOOTER -->
-    <!-- jQuery Plugins -->
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/angular.min.js" asp-append-version="true"></script>
-        <script src="~/js/i18n/angular-locale_ru-ru.js" asp-append-version="true"></script>
-        <script src="~/js/slick.min.js" asp-append-version="true"></script>
-        <script src="~/js/nouislider.min.js" asp-append-version="true"></script>
-        <script src="~/js/main.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-        </script>
-        <script src="~/js/bundle.min.js" asp-append-version="true"></script>
-    </environment>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    @RenderSection("scripts", required: false)
-</body>
+            <!-- /bottom footer -->
+        </footer>
+        <!-- /FOOTER -->
+        <!-- jQuery Plugins -->
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/angular.min.js" asp-append-version="true"></script>
+            <script src="~/js/i18n/angular-locale_ru-ru.js" asp-append-version="true"></script>
+            <script src="~/js/slick.min.js" asp-append-version="true"></script>
+            <script src="~/js/nouislider.min.js" asp-append-version="true"></script>
+            <script src="~/js/main.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+            </script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+            </script>
+            <script src="~/js/bundle.min.js" asp-append-version="true"></script>
+        </environment>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        @RenderSection("scripts", required: false)
+    </body>
 </html>

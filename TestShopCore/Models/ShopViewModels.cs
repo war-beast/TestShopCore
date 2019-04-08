@@ -18,6 +18,7 @@ namespace TestShopCore.Models
         public string Name { get; set; }
         public int Count { get; set; }
         public decimal Price { get; set; }
+        public string Photo { get; set; }
     }
 
     public class ShopingCardViewModel

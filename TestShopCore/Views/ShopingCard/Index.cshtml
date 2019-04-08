@@ -27,9 +27,9 @@
                             <div class='row mb-1'>
                                 <div class='col-sm-5' ng-bind="item.Name"></div>
                                 <div class='input-number col-sm-3'>
-                                    <input type='number' ng-model="item.Count" />
-                                    <span class='qty-up' data-id='item.Id'>+</span>
-                                    <span class='qty-down' data-id='item.Id'>-</span>
+                                    <input type='number' ng-model="item.Count" min="1" max="10000" />
+                                    <span class='qty-up' data-id='item.Id' ng-click="incCount(item)">+</span>
+                                    <span class='qty-down' data-id='item.Id' ng-click="decCount(item)">-</span>
                                 </div>
                                 <div class='col-sm-2'>
                                     <span ng-bind="item.Price"></span>&nbsp;₽
@@ -70,7 +70,7 @@
                 </div>
                 @if (!SignInManager.IsSignedIn(User))
                 {
-                    <p>Чтобы сделать заказ, <a href="/Login">войдите в свой аккаунт</a>. Если у вас нет аккаунта, <a href="/Login/Registration">зарегистрируйтесь</a>.</p>
+                    <p>Чтобы сделать заказ, <a href="/Account/Login">войдите в свой аккаунт</a>. Если у вас нет аккаунта, <a href="/Login/Registration">зарегистрируйтесь</a>.</p>
                 }
                 else
                 {

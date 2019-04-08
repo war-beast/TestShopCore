@@ -36,8 +36,9 @@
             <div class="add-to-cart"> 
                 @{ var price = product.Price;
                     var name = product.Name;
-                    var id = product.Id;}
-                <button class="add-to-cart-btn" ng-click="addItem({Id: @id, Name: '@name', Price: '@price', Count: 1})"><i class="fa fa-shopping-cart"></i> добавить в корзину</button>
+                    var id = product.Id;
+                    var photo = product.Photo;}
+                <button class="add-to-cart-btn" ng-click="addItem({Id: @id, Name: '@name', Price: '@price', Count: 1, Photo: '@photo'})"><i class="fa fa-shopping-cart"></i> добавить в корзину</button>
             </div>
         </div>
     </div>

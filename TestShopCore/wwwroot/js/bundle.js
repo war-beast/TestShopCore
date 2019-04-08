@@ -600,9 +600,6 @@ $(document).ready(function () {
         $('#product-main-img .product-preview').zoom();
     }
 
-    /////////////////////////////////////////
-    InitaializeUpDown();
-
     var priceInputMax = document.getElementById('price-max'),
         priceInputMin = document.getElementById('price-min');
 
@@ -689,31 +686,6 @@ function SetActiveMenuItem() {
     });
 }
 
-function InitaializeUpDown() {
-    // Input number
-    $('.input-number').each(function () {
-        var $this = $(this),
-            $input = $this.find('input[type="number"]'),
-            up = $this.find('.qty-up'),
-            down = $this.find('.qty-down');
-
-        down.on('click', function () {
-            var value = parseInt($input.val()) - 1;
-            value = value < 1 ? 1 : value;
-            $input.val(value);
-            $input.change();
-            updatePriceSlider($this, value);
-        });
-
-        up.on('click', function () {
-            var value = parseInt($input.val()) + 1;
-            $input.val(value);
-            $input.change();
-            updatePriceSlider($this, value);
-        });
-    });
-}
-
 function updatePriceSlider(elem, value) {
     if (elem.hasClass('price-min')) {
         console.log('min');
@@ -778,7 +750,6 @@ function ReloadList(filter) {
 /*----------AngularJS-----------------*/
 /*--Конец функций шаблона--*/
 (function () {
-    'use strict';
     Storage.prototype.setObject = function (key, value) {
         this.setItem(key, angular.toJson(value));
     };
@@ -792,6 +763,21 @@ function ReloadList(filter) {
 
     function ShopingCardCtrl($scope, $http) {
         $scope.card = localStorage.getObject("shoping-card") === null ? { items: new Array() } : localStorage.getObject("shoping-card");
+
+        $scope.incCount = function (item) {
+            if (item.Count < 10000)
+                item.Count += 1;
+
+            localStorage.setObject("shoping-card", this.card);
+        };
+
+        $scope.decCount = function (item) {
+            if (item.Count > 1)
+                item.Count -= 1;
+
+            localStorage.setObject("shoping-card", this.card);
+        };
+
         $scope.totalSum = function () {
             var totalSum = 0;
             angular.forEach($scope.card.items, function (prod) {
