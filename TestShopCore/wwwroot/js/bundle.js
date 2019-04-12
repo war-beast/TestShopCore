@@ -718,8 +718,8 @@ function CreateFilter() {
 
     var filter = {
         Categories: selected,
-        MinPrice: $("#price-min").val().replace(".", ","),
-        MaxPrice: $("#price-max").val().replace(".", ","),
+        MinPrice: $("#price-min").val(),
+        MaxPrice: $("#price-max").val(),
         Sort: $("#sortType").val()
     };
 
@@ -738,7 +738,6 @@ function ReloadList(filter) {
         complete: function (data) {
             if (data.status === 200) {
                 $("#productList").html(data.responseText);
-                ResetBuyButtons();
             }
             else {
                 $("#productList").html("Не удалось загрузить. ");
@@ -760,6 +759,7 @@ function ReloadList(filter) {
     };
 
     angular.module('app', []).controller('ShopingCardCtrl', ['$scope', '$http', ShopingCardCtrl]);
+
 
     function ShopingCardCtrl($scope, $http) {
         $scope.card = localStorage.getObject("shoping-card") === null ? { items: new Array() } : localStorage.getObject("shoping-card");
@@ -805,8 +805,8 @@ function ReloadList(filter) {
         $scope.sendOrder = function () {
             var tokenKey = "tokenInfo";
             var token = localStorage.getItem(tokenKey);
-            var initialInner = $(".order-submit").html();
-            $(".order-submit").html("<img src='/images/loader.gif' />");
+            var initialInner = angular.element(".order-submit").html();
+            angular.element(".order-submit").html("<img src='/images/loader.gif' />");
             var model = {
                 Items: this.card.items,
                 Adress: $("#adress").val()
@@ -821,19 +821,11 @@ function ReloadList(filter) {
             }).then(function (response) {
                 $scope.card = { items: new Array() };
                 localStorage.setObject("shoping-card", $scope.card);
-                $(".order-submit").html(initialInner);
+                angular.element(".order-submit").html(initialInner);
             }, function (error) {
-                $(".order-submit").html(initialInner);
+                angular.element(".order-submit").html(initialInner);
                 alert(error.statusText);
             });
         };
-
-        function LocalizePrice() {
-            var array = this.card.items;
-            angular.forEach(array, function (prod) {
-                prod.Price = prod.Price.replace(".", ",");
-            });
-            return array;
-        }
     }
 })();

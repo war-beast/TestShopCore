@@ -53,15 +53,15 @@ namespace TestShopCore.Controllers
             };
             unitOfWork.Order.Create(order);
 
-            try
-            {
-                unitOfWork.Save();
-            }
-            catch (Exception)
-            {
-                retVal = "На сервере произошла ошибка при обработке заказа.";
-                return BadRequest(retVal);
-            }
+            //try
+            //{
+            //    unitOfWork.Save();
+            //}
+            //catch (Exception)
+            //{
+            //    retVal = "На сервере произошла ошибка при обработке заказа.";
+            //    return BadRequest(retVal);
+            //}
 
             return Ok(retVal);
         }

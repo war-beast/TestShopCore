@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Тестирование</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div id="test"></div>
+    </div>
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var array = [1, 2, 3, 4, 5, 6];
+
+            class TempClass {
+                constructor(array) {
+                    this.clArray = array;
+                }
+
+                template(item) {
+                    return [
+                        "<div class='row'>",
+                        "<div class='col-sm-6'>Element Class: </div>",
+                        "<div class='col-sm-6'>" + item + "</div>",
+                        "</div>"
+                    ].join('');
+                }
+
+                showTemplate(element) {
+                    $(this.clArray).each(function (e) {
+                        var row = tempCl.template(this);
+                        $(element).append(row);
+                    });
+                }
+            }
+
+            var temp = {
+                template: function (item) {
+                    return [
+                        "<div class='row'>",
+                        "<div class='col-sm-6'>Element: </div>",
+                        "<div class='col-sm-6'>" + item + "</div>",
+                        "</div>"
+                    ].join('');
+                }
+            }
+
+            let tempCl = new TempClass(array);
+            //$(array).each(function (e) {
+            //    var row = temp.template(this);
+            //    $("#test").append(row);
+            //});
+            tempCl.showTemplate($("#test"));
+        });
+    </script>
+</body>
+</html>

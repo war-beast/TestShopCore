@@ -32,7 +32,7 @@
                                     <span class='qty-down' data-id='item.Id' ng-click="decCount(item)">-</span>
                                 </div>
                                 <div class='col-sm-2'>
-                                    <span ng-bind="item.Price"></span>&nbsp;₽
+                                    <span>{{item.Price | currency}}</span>
                                 </div>
                                 <div class='col-sm-2'><a href='' class='remove' ng-click="removeItem(item)">X</a></div>
                             </div>
@@ -87,27 +87,5 @@
 
 @section scripts{
     <script>
-        $(document).ready(function () {
-            function GetItemBlock(item) {
-                var cardElement = {
-                    template: [
-                        "<div class='row mb-1'>",
-                        "<div class='col-sm-5'>" + item.Name + "</div>",
-                        "<div class='input-number col-sm-3'>",
-                        "<input id='count-" + item.Id + "' type='number' class='order-items' value='" + item.Count + "' />",
-                        "<span class='qty-up' data-id='" + item.Id + "'>+</span>",
-                        "<span class='qty-down' data-id='" + item.Id + "'>-</span>",
-                        "</div>",
-                        "<div class='col-sm-2'>",
-                        "<span id='sum-" + item.Id + "'>" + item.Price + "</span>&nbsp;₽",
-                        "</div>",
-                        "<div class='col-sm-2'><a href='#' data-id='" + item.Id + "' class='remove'>X</a></div>",
-                        "</div>"
-                    ].join('')
-                };
-
-                return cardElement.template;
-            }
-        });
     </script>
 }
